@@ -2,5 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/samaybry/public_html/tlh
-    - /bin/cp templates/main.html $DEPLOYPATH
-    - /bin/cp static/main.css $DEPLOYPATH
+    - /bin/cp .* $DEPLOYPATH
