@@ -1,0 +1,30 @@
+<!doctype html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <script src="{{ url_for('static', filename='lib/jquery.min.js') }}"></script>
+
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <td>Entry</td>
+                <td>EN</td>
+                <td>DE</td>
+                <td>NL</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in dictionary %}
+            <tr>
+                <td>{{ entry }}</td>
+                <td>{{ dictionary[entry].en['text'] }}</td>
+                <td>{{ dictionary[entry].de['text'] }}</td>
+                <td>{{ dictionary[entry].nl['text'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>

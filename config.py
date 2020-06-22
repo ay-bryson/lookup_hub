@@ -1,8 +1,14 @@
+import random
+import string
+
 from flask import Flask, url_for
 
 
-app = Flask(__name__)
+APP = Flask(__name__)
 
-DICT_FP = url_for('static', filename='dictionary.json')
+# DICT_FP = url_for('static', filename='dictionary.json')
 
-print(DICT_FP)
+APP.config['BASIC_AUTH_USERNAME'] = 'language'
+APP.config['BASIC_AUTH_PASSWORD'] = 'awesumpassword123'
+APP.config['SECRET_KEY'] = ''.join(
+    random.choice(string.ascii_letters) for i in range(24))
