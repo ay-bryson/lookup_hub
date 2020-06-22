@@ -1,16 +1,6 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/samaybry/public_html/
+    - export DEPLOYPATH=/home/samaybry/public_html/tlh
     - /bin/cp templates/main.html $DEPLOYPATH
     - /bin/cp static/main.css $DEPLOYPATH
-
-runtime: python37
-api_version: 1
-threadsafe: true
-
-handlers:
-  - url: /static
-    static_dir: static
-  - url: /.*
-    script: lookup_hub.app
