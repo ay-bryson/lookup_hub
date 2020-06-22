@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/samaybry/public_html/tlh
-    - /bin/cp .* $DEPLOYPATH
+    - /bin/cp r .* $DEPLOYPATH
