@@ -2,12 +2,12 @@ from config import APP as app
 from tools import get_dictionary
 
 from flask import render_template, request
-from flask_socketio import SocketIO, emit
-from flask_basicauth import BasicAuth
+# from flask_socketio import SocketIO, emit
+# from flask_basicauth import BasicAuth
 
 
-socketio = SocketIO(app)
-basic_auth = BasicAuth(app)
+# socketio = SocketIO(app)
+# basic_auth = BasicAuth(app)
 
 
 @app.route('/')
@@ -19,7 +19,8 @@ def index():
 
 
 if __name__ == '__main__':
-    socketio.run(
-        app,
-        # debug=True,
-    )
+    # socketio.run(
+    #     app,
+    #     # debug=True,
+    # )
+    app.run()
