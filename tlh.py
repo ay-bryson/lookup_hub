@@ -3,11 +3,11 @@ from tools import get_dictionary
 
 from flask import render_template, request
 # from flask_socketio import SocketIO, emit
-from flask_basicauth import BasicAuth
+# from flask_basicauth import BasicAuth
 
 
 # socketio = SocketIO(app)
-basic_auth = BasicAuth(app)
+# basic_auth = BasicAuth(app)
 
 
 @app.route('/')
