@@ -10,5 +10,5 @@ APP = Flask(__name__)
 
 APP.config['BASIC_AUTH_USERNAME'] = 'language'
 APP.config['BASIC_AUTH_PASSWORD'] = 'awesumpassword123'
-# APP.config['SECRET_KEY'] = ''.join(
-#     random.choice(string.ascii_letters) for i in range(24))
+APP.config['SECRET_KEY'] = ''.join(
+    random.choice(string.ascii_letters) for i in range(24))
