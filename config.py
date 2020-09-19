@@ -19,7 +19,7 @@ def get_json_fp():
 
 APP = Flask(__name__)
 
-APP.config['TEMPLATES_AUTO_RELOAD'] = True
+# APP.config['TEMPLATES_AUTO_RELOAD'] = True
 APP.config['BASIC_AUTH_USERNAME'] = 'language'
 APP.config['BASIC_AUTH_PASSWORD'] = 'awesumpassword123'
 APP.config['STATIC_URL_PATH'] = '/static'

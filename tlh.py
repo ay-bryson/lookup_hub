@@ -54,7 +54,7 @@ DICTI = get_dictionary()
 if __name__ == '__main__':
     socketio.run(
         app,
-        debug=True,
+        # debug=True,
     )
     # app.run(
     #     debug=True
