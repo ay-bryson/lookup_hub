@@ -27,7 +27,8 @@ def lookup_hub():
 
 @socketio.on('update_cell')
 def update_cell(data):
-    raise Exception('Own exception for debugging')
+    print('Does this get logged?')
+
     key = data['key']
     target_language = data['target_language']
     value = data['value']
