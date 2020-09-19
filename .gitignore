@@ -1,1 +1,3 @@
-data/dictionary*
+data/dictionary.db
+.vscode*
+*.pyc

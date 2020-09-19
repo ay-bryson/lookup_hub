@@ -1,0 +1,168 @@
+{
+    "2203": {
+        "de": {
+            "text": "Schwerlastrollen "
+        },
+        "en": {
+            "text": "Heavy-duty casters"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2204": {
+        "de": {
+            "text": "K\u00fchlk\u00f6rper aus Aluminium"
+        },
+        "en": {
+            "text": "Aluminium heat sink"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2205": {
+        "de": {
+            "text": "Aktivboxen"
+        },
+        "en": {
+            "text": "Active speakers / Powered speakers"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2206": {
+        "de": {
+            "text": "Lastwiderstand"
+        },
+        "en": {
+            "text": "Load resistance / Load resistor"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2207": {
+        "de": {
+            "text": "gemeinsam isoliert",
+            "comment": "For example https://www.thomann.de/de/kse_falken_1.htm"
+        },
+        "en": {
+            "text": "Insulated together"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2208": {
+        "de": {
+            "text": "Me\u00dfmikrofon / Messmikrofon"
+        },
+        "en": {
+            "text": "Measurement microphone"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2209": {
+        "de": {
+            "text": "Rednermikrofon"
+        },
+        "en": {
+            "text": "Speech microphone"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2210": {
+        "de": {
+            "text": "Modular-Systeme / Modular-Systeme"
+        },
+        "en": {
+            "text": "Modular system"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2211": {
+        "de": {
+            "text": "Mylarmembran "
+        },
+        "en": {
+            "text": "Mylar diaphragm"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2212": {
+        "de": {
+            "text": "feuchtigkeitsimpr\u00e4gniert"
+        },
+        "en": {
+            "text": "Moisture impregnated"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2213": {
+        "de": {
+            "text": "\u00dcberstrom"
+        },
+        "en": {
+            "text": "Overcurrent"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2214": {
+        "de": {
+            "text": "Peakleistung / Leistungsspitze"
+        },
+        "en": {
+            "text": "Peak power"
+        },
+        "nl": {
+            "text": "Piekvermogen"
+        }
+    },
+    "2215": {
+        "de": {
+            "text": "Steckflansch\u00a0"
+        },
+        "en": {
+            "text": "Pole-mount flange"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2216": {
+        "de": {
+            "text": "Plattenspannung "
+        },
+        "en": {
+            "text": "Plate voltage"
+        },
+        "nl": {
+            "text": null
+        }
+    },
+    "2217": {
+        "de": {
+            "text": "PTFE isoliert"
+        },
+        "en": {
+            "text": "PTFE insulated"
+        },
+        "nl": {
+            "text": null
+        }
+    }
+}

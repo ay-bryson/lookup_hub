@@ -1,0 +1,35 @@
+
+#hub-grid {
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 1fr 1fr 1fr;
+    min-width: 900px;
+    max-width: 1400px;
+    margin: auto;
+}
+
+.hub-entry {
+    padding: 5px;
+    background-color: var(--off-white);
+    border-radius: 3px;
+}
+
+.hub-entry.en {
+    grid-column: 1;
+}
+
+.hub-entry.de {
+    grid-column: 2;
+}
+
+.hub-entry.nl {
+    grid-column: 3;
+}
+
+.disconnected {
+    color: red;
+}
+
+.connected {
+    color: green;
+}
