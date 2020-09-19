@@ -1,0 +1,20 @@
+<!doctype html>
+
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    {% block styles %} {% endblock %}
+    <script src="{{ url_for('static', filename='lib/jquery.min.js') }}"></script>
+    {% block scripts %} {% endblock %}
+</head>
+
+<body>
+    <div id="navigator-div">
+        <button>Home</button>
+        <button>Lookup Hub</button>
+        <button>Mistakes</button>
+        <button>Documents</button>
+    </div>
+
+    {% block conent %}
+    {% endblock %}
+</body>
