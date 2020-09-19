@@ -1,8 +1,8 @@
 import os, sys
 
-sys.path.append("/home/samaybry/public_html/tlh");
+sys.path.append("/home/aybry/public_html/lookup_hub");
 sys.path.insert(0, os.path.dirname(__file__))
 
-from config import APP
+from config import APP as application
 
-APP.secret_key = 'aotearoa2013'
+application.secret_key = 'aotearoa2013'
