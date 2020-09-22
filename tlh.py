@@ -51,7 +51,7 @@ def get_dictionary():
 
 def save_dictionary():
     with open(JSON_FP, 'w') as json_f:
-        json.dump(DICTI, indent=4)
+        json.dump(DICTI, json_f, indent=4)
 
 
 DICTI = get_dictionary()

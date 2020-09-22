@@ -1,4 +1,5 @@
-data/dictionary.db
+data/dictionary.json
 .vscode*
 *.pyc
+__pycache__*
 tlh/

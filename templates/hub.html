@@ -27,7 +27,9 @@
                     id="{{ key }}-en"
                     data-key="{{ key }}"
                     data-target-language="en">
-                    {{ dictionary[key]["en"]["text"] }}
+                    {% if dictionary[key]["en"]["text"] != None %}
+                        {{ dictionary[key]["en"]["text"] }}
+                    {% endif %}
                 </div>
             </div>
             <div class="hub-entry de"
@@ -36,7 +38,9 @@
                     id="{{ key }}-de"
                     data-key="{{ key }}"
                     data-target-language="de">
-                    {{ dictionary[key]["de"]["text"] }}
+                    {% if dictionary[key]["de"]["text"] != None %}
+                        {{ dictionary[key]["de"]["text"] }}
+                    {% endif %}
                 </div>
             </div>
             <div class="hub-entry nl"
@@ -45,7 +49,9 @@
                     id="{{ key }}-nl"
                     data-key="{{ key }}"
                     data-target-language="nl">
-                    {{ dictionary[key]["nl"]["text"] }}
+                    {% if dictionary[key]["nl"]["text"] != None %}
+                        {{ dictionary[key]["nl"]["text"] }}
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}
