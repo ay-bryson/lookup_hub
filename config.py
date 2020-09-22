@@ -22,7 +22,7 @@ class Config:
     FLASK_ENV = os.environ.get('FLASK_ENV')
 
     # Database
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////home/aybry/Code/Python/lookup_hub/data/dictionary_good.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.abspath('data/dictionary.db')
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
