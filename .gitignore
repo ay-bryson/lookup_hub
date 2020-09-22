@@ -1,3 +1,4 @@
 data/dictionary.db
 .vscode*
 *.pyc
+tlh/
