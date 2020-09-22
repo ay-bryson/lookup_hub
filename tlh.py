@@ -8,7 +8,6 @@ from flask_socketio import SocketIO, emit
 from config import APP as app
 from config import AUTH as auth
 from config import JSON_FP
-# from tools import get_dictionary
 
 
 socketio = SocketIO(app)
@@ -51,12 +50,3 @@ def get_dictionary():
 
 DICTI = get_dictionary()
 
-
-if __name__ == '__main__':
-    socketio.run(
-        app,
-        # debug=True,
-    )
-    # app.run(
-    #     debug=True
-    # )
