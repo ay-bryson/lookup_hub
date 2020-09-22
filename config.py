@@ -5,28 +5,27 @@ import sqlite3
 
 from flask import Flask, url_for
 from flask_basicauth import BasicAuth
+from dotenv import load_dotenv
 
-from tools import get_dictionary
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(basedir, '.env'))
 
 
-def get_json_fp():
-    if os.path.isfile('data/dictionary.json'):
-        json_fp = 'data/dictionary.json'
-    else:
-        json_fp = 'data/dummy_dictionary.json'
 
-    return json_fp
+class Config:
+    """Set Flask configuration from .env file."""
 
-APP = Flask(__name__)
+    # General Config
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+    FLASK_APP = os.environ.get('FLASK_APP')
+    FLASK_ENV = os.environ.get('FLASK_ENV')
 
-# APP.config['TEMPLATES_AUTO_RELOAD'] = True
-APP.config['BASIC_AUTH_USERNAME'] = 'language'
-APP.config['BASIC_AUTH_PASSWORD'] = 'awesumpassword123'
-APP.config['STATIC_URL_PATH'] = '/static'
-APP.config['SECRET_KEY'] = ''.join(
-    random.choice(string.ascii_letters) for i in range(24))
-
-JSON_FP = get_json_fp()
-
-AUTH = BasicAuth(APP)
-
+    # Database
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////home/aybry/Code/Python/lookup_hub/data/dictionary_good.db'
+    SQLALCHEMY_ECHO = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
+    # Basicauth
+    BASIC_AUTH_USERNAME = 'language'
+    BASIC_AUTH_PASSWORD = 'awesumpassword123'

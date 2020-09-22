@@ -13,27 +13,16 @@ function startSocket() {
     })
 
     socket.on("updated", data => {
-        print(data["id"])
-        print(data["value"])
         $("#" + data["id"]).text(data["value"]);
     })
 }
 
 
-function testUpdate(id, targetLang, value) {
-    socket.emit("update_cell", {
-        id: id,
-        target_language: targetLang,
-        new_value: value,
-    });
-}
 
-
-
-function updateCell(key, targetLang, text) {
+function updateCell(key, target, text) {
     var data = {
-        key: key,
-        target_language: targetLang,
+        rowid: key,
+        target: target,
         value: text,
     }
 

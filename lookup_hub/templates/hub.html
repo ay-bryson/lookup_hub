@@ -20,37 +20,37 @@
     <!-- </div> -->
 
     <div id="hub-grid">
-        {% for key in dictionary.keys() %}
+        {% for entry in dictionary %}
             <div class="hub-entry en"
                 onclick="createInput($(this).children()[0]);">
                 <div class="hub-entry-text"
-                    id="{{ key }}-en"
-                    data-key="{{ key }}"
+                    id="{{ entry.id }}-en"
+                    data-key="{{ entry.id }}"
                     data-target-language="en">
-                    {% if dictionary[key]["en"]["text"] != None %}
-                        {{ dictionary[key]["en"]["text"] }}
+                    {% if entry.en != None %}
+                        {{ entry.en }}
                     {% endif %}
                 </div>
             </div>
             <div class="hub-entry de"
                 onclick="createInput($(this).children()[0]);">
                 <div class="hub-entry-text"
-                    id="{{ key }}-de"
-                    data-key="{{ key }}"
+                    id="{{ entry.id }}-de"
+                    data-key="{{ entry.id }}"
                     data-target-language="de">
-                    {% if dictionary[key]["de"]["text"] != None %}
-                        {{ dictionary[key]["de"]["text"] }}
+                    {% if entry.de != None %}
+                        {{ entry.de }}
                     {% endif %}
                 </div>
             </div>
             <div class="hub-entry nl"
                 onclick="createInput($(this).children()[0]);">
                 <div class="hub-entry-text"
-                    id="{{ key }}-nl"
-                    data-key="{{ key }}"
+                    id="{{ entry.id }}-nl"
+                    data-key="{{ entry.id }}"
                     data-target-language="nl">
-                    {% if dictionary[key]["nl"]["text"] != None %}
-                        {{ dictionary[key]["nl"]["text"] }}
+                    {% if entry.nl != None %}
+                        {{ entry.nl }}
                     {% endif %}
                 </div>
             </div>
