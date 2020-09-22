@@ -10,11 +10,7 @@ function createInput(elem) {
     newInput.keyup( function(event) {
         if (event.which == 13) {
             updateCell(key, targetLang, event.target.value);
-            $($(event.target).siblings()[0]).show();
-            $(event.target).remove();
-        } else if (event.which == 27) {
-            $($(event.target).siblings()[0]).show();
-            $(event.target).remove();
+            closeInputs();
         }
     })
 
@@ -23,3 +19,17 @@ function createInput(elem) {
     $(elem).hide();
     newInput.focus();
 }
+
+
+function closeInputs() {
+    $($(".hub-entry > input").siblings()).show();
+    $(".hub-entry > input").remove();
+}
+
+
+// Close all inputs on escape key
+$(document).keydown(function(event) {
+    if (event.keyCode == 27) {
+        closeInputs();
+    }
+});

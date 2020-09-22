@@ -9,9 +9,14 @@
 }
 
 .hub-entry {
-    padding: 5px;
+    padding: 7px;
     background-color: var(--off-white);
     border-radius: 3px;
+    cursor: pointer;
+}
+
+.hub-entry input {
+    width: 100%;
 }
 
 .hub-entry.en {

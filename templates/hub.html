@@ -21,30 +21,30 @@
 
     <div id="hub-grid">
         {% for key in dictionary.keys() %}
-            <div class="hub-entry en">
+            <div class="hub-entry en"
+                onclick="createInput($(this).children()[0]);">
                 <div class="hub-entry-text"
                     id="{{ key }}-en"
                     data-key="{{ key }}"
-                    data-target-language="en"
-                    onclick="createInput(this);">
+                    data-target-language="en">
                     {{ dictionary[key]["en"]["text"] }}
                 </div>
             </div>
-            <div class="hub-entry de">
+            <div class="hub-entry de"
+                onclick="createInput($(this).children()[0]);">
                 <div class="hub-entry-text"
                     id="{{ key }}-de"
                     data-key="{{ key }}"
-                    data-target-language="de"
-                    onclick="createInput(this);">
+                    data-target-language="de">
                     {{ dictionary[key]["de"]["text"] }}
                 </div>
             </div>
-            <div class="hub-entry nl">
+            <div class="hub-entry nl"
+                onclick="createInput($(this).children()[0]);">
                 <div class="hub-entry-text"
                     id="{{ key }}-nl"
                     data-key="{{ key }}"
-                    data-target-language="nl"
-                    onclick="createInput(this);">
+                    data-target-language="nl">
                     {{ dictionary[key]["nl"]["text"] }}
                 </div>
             </div>

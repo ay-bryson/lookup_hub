@@ -26,13 +26,14 @@ def lookup_hub():
 
 @socketio.on('update_cell')
 def update_cell(data):
-    print('Does this get logged?')
 
     key = data['key']
     target_language = data['target_language']
     value = data['value']
 
     DICTI[key][target_language]['text'] = value
+    
+    save_dictionary()
 
     data_out = {
         'id': '-'.join([key, target_language]),
@@ -46,6 +47,11 @@ def get_dictionary():
     with open(JSON_FP, 'r') as json_f:
         dictionary = json.load(json_f)
     return dictionary
+
+
+def save_dictionary():
+    with open(JSON_FP, 'w') as json_f:
+        json.dump(DICTI, indent=4)
 
 
 DICTI = get_dictionary()
