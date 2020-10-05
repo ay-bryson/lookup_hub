@@ -2,34 +2,81 @@
 #hub-grid {
     display: grid;
     grid-gap: 5px;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: auto 1fr 1fr 1fr auto;
     min-width: 900px;
-    max-width: 1400px;
+    max-width: 1500px;
     margin: auto;
+}
+
+.grid-elem {
+    border-radius: 3px;
+    min-height: 30px;
+}
+
+.hub-header {
+    padding: 14px;
+    text-align: center;
+    font-weight: bold;
+    background-color: rgb(180, 180, 180);
 }
 
 .hub-entry {
     padding: 7px;
     background-color: var(--off-white);
-    border-radius: 3px;
+    display: flex;
+}
+
+.entry-comment {
+    margin-left: auto;
+    order: 2;
+    right: 0;
+    top: auto;
+    height: 20px;
+    width: 20px;
+    opacity: 50%;
+    /* background-color: indigo; */
+}
+
+.buttons-left {
+    grid-column: 1
+}
+
+.buttons-right {
+    grid-column: 5
+}
+
+.buttons-left button, .buttons-right button {
+    height: 100%;
+    opacity: 0.5;
+}
+
+.buttons-left button:hover, .buttons-right button:hover {
+    opacity: 1;
     cursor: pointer;
-    min-height: 30px;
 }
 
-.hub-entry input {
-    width: 100%;
+.dictionary-button:hover .fa-minus-square {
+    color: rgb(184, 0, 0);
 }
 
-.hub-entry.en {
-    grid-column: 1;
+.dictionary-button:hover .fa-plus-square {
+    color: green;
 }
 
-.hub-entry.de {
+.dictionary-button:hover .fa-pen-square {
+    color: rgb(218, 185, 0);
+}
+
+.de {
     grid-column: 2;
 }
 
-.hub-entry.nl {
+.en {
     grid-column: 3;
+}
+
+.nl {
+    grid-column: 4;
 }
 
 .disconnected {
@@ -38,4 +85,64 @@
 
 .connected {
     color: green;
+}
+
+
+#popup-container {
+    background-color: rgba(128, 128, 128, 0.5);
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+#edit-entry-grid {
+    background-color: rgb(31, 106, 116);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+    min-width: 900px;
+    max-width: 1500px;
+    margin: 30vh auto auto;
+    padding: 40px;
+}
+
+.edit-entry-grid-elem {
+    width: 100%;
+}
+
+.edit-entry-header {
+    text-align: center;
+    margin: auto;
+    font-size: larger;
+    color: var(--off-white);
+}
+
+.edit-entry-row {
+    margin: auto;
+    align-content: center;
+}
+
+.edit-entry-row input, .edit-entry-row textarea {
+    width: 100%;
+}
+
+.edit-entry-row textarea {
+    resize: none;
+}
+
+
+#submit-entry-row {
+    grid-column: 2;
+    width: 100%;
+}
+
+#submit-entry-row button {
+    width: 30%;
+    display: block;
+    margin: auto;
 }

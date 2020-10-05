@@ -7,6 +7,9 @@
 {% block scripts %}
     <script src="{{ url_for('static', filename='scripts/socket.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/dictionary.js') }}"></script>
+    <script>
+        var dictionaryJSONL = {{ dictionary|tojson }};
+    </script>
 {% endblock %}
 
 {% block right_buttons %}
@@ -16,44 +19,60 @@
 {% endblock %}
 
 {% block content %}
-    <!-- <div id="socket-status-container"> -->
-    <!-- </div> -->
+    <div id="popup-container">
+        <div id="edit-entry-grid">
+            <div class="edit-entry-header edit-entry-grid-elem header-de">
+                DE
+            </div>
+            <div class="edit-entry-header edit-entry-grid-elem header-en">
+                EN
+            </div>
+            <div class="edit-entry-header edit-entry-grid-elem header-nl">
+                NL
+            </div>
+
+            <div class="edit-entry-row edit-entry-grid-elem row-de">
+                <input type="text" name="text-de" id="text-de">
+            </div>
+            <div class="edit-entry-row edit-entry-grid-elem row-en">
+                <input type="text" name="text-en" id="text-en">
+            </div>
+            <div class="edit-entry-row edit-entry-grid-elem row-nl">
+                <input type="text" name="text-nl" id="text-nl">
+            </div>
+
+            <div class="edit-entry-row edit-entry-grid-elem row-de">
+                <textarea name="comment-de" id="comment-de" rows="10"></textarea>
+            </div>
+            <div class="edit-entry-row edit-entry-grid-elem row-en">
+                <textarea name="comment-en" id="comment-en" rows="10"></textarea>
+            </div>
+            <div class="edit-entry-row edit-entry-grid-elem row-nl">
+                <textarea name="comment-nl" id="comment-nl" rows="10"></textarea>
+            </div>
+
+            <div id="submit-entry-row" class="button-row">
+                <button id="submit-entry-button">Submit</button>
+                <button onclick="$('#popup-container').hide();">Cancel</button>
+            </div>
+        </div>
+    </div>
 
     <div id="hub-grid">
-        {% for entry in dictionary %}
-            <div class="hub-entry en"
-                onclick="createInput($(this).children()[0]);">
-                <div class="hub-entry-text"
-                    id="{{ entry.id }}-en"
-                    data-key="{{ entry.id }}"
-                    data-target-language="en">
-                    {% if entry.en != None %}
-                        {{ entry.en }}
-                    {% endif %}
-                </div>
+        <div class="grid-elem hub-header de">
+            <div class="hub-entry-text">
+                German
             </div>
-            <div class="hub-entry de"
-                onclick="createInput($(this).children()[0]);">
-                <div class="hub-entry-text"
-                    id="{{ entry.id }}-de"
-                    data-key="{{ entry.id }}"
-                    data-target-language="de">
-                    {% if entry.de != None %}
-                        {{ entry.de }}
-                    {% endif %}
-                </div>
+        </div>
+        <div class="grid-elem hub-header en">
+            <div class="hub-entry-text">
+                English
             </div>
-            <div class="hub-entry nl"
-                onclick="createInput($(this).children()[0]);">
-                <div class="hub-entry-text"
-                    id="{{ entry.id }}-nl"
-                    data-key="{{ entry.id }}"
-                    data-target-language="nl">
-                    {% if entry.nl != None %}
-                        {{ entry.nl }}
-                    {% endif %}
-                </div>
+        </div>
+        <div class="grid-elem hub-header nl">
+            <div class="hub-entry-text">
+                Dutch
             </div>
-        {% endfor %}
+        </div>
     </div>
 {% endblock %}
