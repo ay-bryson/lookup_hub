@@ -86,7 +86,7 @@ class Entry {
         if ([undefined, null, ""].indexOf(comment) == -1) {
             return `
                 <div class="entry-comment" title="${ comment }">
-                    <i class="fas fa-comment-alt fa-lg"></i>
+                    <i class="fa fa-sticky-note fa-lg"></i>
                 </div>
             `
         } else {
@@ -122,13 +122,13 @@ const entryHTML = (entry) => `
             class="dictionary-button"
             data-key="${ entry.id }"
             onclick="removeRow('${ entry.id }');">
-            <i class="fas fa-minus-square fa-lg"></i>
+            <i class="fa fa-minus-square fa-lg"></i>
         </button>
         <button
             class="dictionary-button"
             data-key="${ entry.id }"
             onclick="appendRow('${ entry.id }');">
-            <i class="fas fa-plus-square fa-lg"></i>
+            <i class="fa fa-plus-square fa-lg"></i>
         </button>
     </div>
 
@@ -169,7 +169,7 @@ const entryHTML = (entry) => `
             data-key="${ entry.id }"
             class="dictionary-button"
             onclick="getEntry('${ entry.id }');">
-            <i class="fas fa-pen-square fa-lg"></i>
+            <i class="fa fa-pencil-square fa-lg"></i>
         </button>
     </div>`
 

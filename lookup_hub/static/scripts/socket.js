@@ -69,6 +69,7 @@ function getEntry(entryID) {
 
 function showEditWindow(data) {
     $("#popup-container").show();
+    $("#edit-entry-grid").css("display", "grid");
     for (lang of ["en", "de", "nl"]) {
         for (item of ["text", "comment"]) {
             try {
