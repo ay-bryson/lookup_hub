@@ -16,6 +16,5 @@ class Config:
     FLASK_ENV = os.environ.get('FLASK_ENV')
 
     # Basicauth
-    BASIC_AUTH_USERNAME = 'language'
-    BASIC_AUTH_PASSWORD = 'awesumpassword123'
-
+    BASIC_AUTH_USERNAME = os.environ.get('AUTH_USERNAME')
+    BASIC_AUTH_PASSWORD = os.environ.get('AUTH_PASSWORD')
