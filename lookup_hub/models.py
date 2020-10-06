@@ -18,12 +18,13 @@ class Database(object):
     data = []
     indices = []
 
-    jsonl_fp = os.path.join(basedir, 'data', 'dictionary.jsonl')
-    if not os.path.isfile(jsonl_fp):
-        jsonl_fp = init_dummy_dictionary()
-
-
     def __init__(self):
+        jsonl_fp = os.path.join(basedir, 'data', 'dictionary.jsonl')
+        if not os.path.isfile(jsonl_fp):
+            self.jsonl_fp = init_dummy_dictionary()
+        else:
+            self.jsonl_fp = jsonl_fp
+
         with open(self.jsonl_fp, 'r') as jsonl_fp:
             for jsonline in jsonl_fp:
                 line = Line(jsonline)
