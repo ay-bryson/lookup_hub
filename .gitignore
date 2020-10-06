@@ -2,3 +2,4 @@
 *.pyc
 __pycache__*
 tlh/*
+data/dictionary.jsonl
