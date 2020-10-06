@@ -3,7 +3,6 @@ import random
 import string
 
 from flask import Flask, url_for
-from flask_basicauth import BasicAuth
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
