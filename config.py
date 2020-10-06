@@ -4,7 +4,6 @@ import string
 
 from flask import Flask, url_for
 from flask_basicauth import BasicAuth
-from dotenv import load_dotenv
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
