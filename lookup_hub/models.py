@@ -103,7 +103,11 @@ class Line(object):
 
 
 def init_dummy_dictionary():
-    jsonl_fp = os.path.join(basedir, 'data', 'dummy_dictionary.jsonl')
+    data_dir = os.path.join(basedir, 'data')
+    jsonl_fp = os.path.join(data_dir, 'dummy_dictionary.jsonl')
+
+    if not os.path.isdir(data_dir):
+        os.mkdir(data_dir)
 
     with open(jsonl_fp, 'w+') as jsonl_f:
         jsonl_f.write(json.dumps(
