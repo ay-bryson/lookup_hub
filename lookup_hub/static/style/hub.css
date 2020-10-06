@@ -1,11 +1,24 @@
 
-#hub-grid {
-    display: grid;
-    grid-gap: 5px;
-    grid-template-columns: auto 1fr 1fr 1fr auto;
+#hub-table {
     min-width: 900px;
-    max-width: 1700px;
+    max-width: 1500px;
     margin: auto;
+    border-spacing: 4px;
+}
+
+#hub-table th, #hub-table td {
+    border-radius: 3px;
+}
+
+#hub-table th {
+    background-color: rgb(180, 180, 180);
+    height: 50px;
+}
+
+
+#hub-table th.empty {
+    background-color: var(--background-grey);
+    opacity: 0;
 }
 
 .grid-elem {
@@ -17,37 +30,20 @@
     padding: 14px;
     text-align: center;
     font-weight: bold;
-    background-color: rgb(180, 180, 180);
 }
 
 .hub-entry {
     padding: 7px;
     background-color: var(--off-white);
-    display: flex;
+}
+
+.hub-entry-text {
+    display: inline;
 }
 
 .entry-comment {
-    margin-left: auto;
-    order: 2;
-    right: 0;
-    top: auto;
-    height: 20px;
-    width: 20px;
+    float: right;
     opacity: 50%;
-}
-
-.buttons-left {
-    grid-column: 1;
-    display: flex;
-    flex-wrap: nowrap;
-}
-
-.buttons-left button {
-    margin-left: 5px;
-}
-
-.buttons-right {
-    grid-column: 5
 }
 
 .buttons-left button, .buttons-right button {
@@ -66,17 +62,6 @@
     color: rgb(218, 185, 0);
 }
 
-.de {
-    grid-column: 2;
-}
-
-.en {
-    grid-column: 3;
-}
-
-.nl {
-    grid-column: 4;
-}
 
 .disconnected {
     color: red;

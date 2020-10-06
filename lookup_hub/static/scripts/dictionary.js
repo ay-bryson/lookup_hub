@@ -28,7 +28,7 @@ class Dictionary {
     insert(entry, atID, index) {
         if (atID === undefined) {
             // Only here when initiating dictionary
-            $("#hub-grid").append(entry.html);
+            $("#hub-table").append(entry.html);
         } else {
             // atID specified => insert before `atID`
             if (index === undefined) {
@@ -39,7 +39,7 @@ class Dictionary {
 
             var nextID = this.ids[index + 1];
             var dictIDElems = findEntryElem(nextID);
-            $(entry.html).insertBefore(dictIDElems.first().parent());
+            $(entry.html).insertBefore(dictIDElems.first().parent().parent());
         }
 
     }
@@ -84,9 +84,9 @@ class Entry {
         var comment = this.comments[language];
         if ([undefined, null, ""].indexOf(comment) == -1) {
             return `
-                <div class="entry-comment" title="${ escapeHTML(comment) }">
-                    <i class="fa fa-sticky-note fa-lg"></i>
-                </div>
+                <span>
+                    <i class="entry-comment fa fa-sticky-note fa-lg" title="${ escapeHTML(comment) }"></i>
+                </span>
             `
         } else {
             return ``
@@ -115,26 +115,27 @@ function escapeHTML(html) {
 
 
 const leftButtonsHTML = (entry) => `
-    <div class="grid-elem buttons-left"
-    data-row-id="${ entry.id }">
+    <td class="buttons-left">
         <button
             class="pure-button dictionary-button"
             data-key="${ entry.id }"
             onclick="removeRow('${ entry.id }');">
             <i class="fa fa-minus-square fa-lg"></i>
         </button>
+    </td>
+    <td class="buttons-left">
         <button
             class="pure-button dictionary-button"
             data-key="${ entry.id }"
             onclick="addRow('${ entry.id }');">
             <i class="fa fa-plus-square fa-lg"></i>
         </button>
-    </div>
+    </td>
 `
 
 
 const dictionaryElemsHTML = (entry) => `
-    <div class="grid-elem hub-entry de"
+    <td class="hub-entry de"
         data-row-id="${ entry.id }">
         <div class="hub-entry-text"
             id="${ entry.id }-de"
@@ -143,8 +144,8 @@ const dictionaryElemsHTML = (entry) => `
             ${ escapeHTML(entry.textDE) }
         </div>
         ` + entry.commentHTML("de") + `
-    </div>
-    <div class="grid-elem hub-entry en"
+    </td>
+    <td class="hub-entry en"
         data-row-id="${ entry.id }">
         <div class="hub-entry-text"
             id="${ entry.id }-en"
@@ -153,8 +154,8 @@ const dictionaryElemsHTML = (entry) => `
             ${ escapeHTML(entry.textEN) }
         </div>
         ` + entry.commentHTML("en") + `
-    </div>
-    <div class="grid-elem hub-entry nl"
+    </td>
+    <td class="hub-entry nl"
         data-row-id="${ entry.id }">
         <div class="hub-entry-text"
             id="${ entry.id }-nl"
@@ -163,12 +164,12 @@ const dictionaryElemsHTML = (entry) => `
             ${ escapeHTML(entry.textNL) }
         </div>
         ` + entry.commentHTML("nl") + `
-    </div>
+    </td>
     `
 
 
 const rightButtonsHTML = (entry) => `
-    <div class="grid-elem buttons-right"
+    <td class="buttons-right"
         data-row-id="${ entry.id }">
         <button
             class="pure-button dictionary-button"
@@ -176,10 +177,14 @@ const rightButtonsHTML = (entry) => `
             onclick="getEntry('${ entry.id }');">
             <i class="fa fa-pencil-square fa-lg"></i>
         </button>
-    </div>
+    </td>
     `
 
-const entryHTML = (entry) => leftButtonsHTML(entry) + dictionaryElemsHTML(entry) + rightButtonsHTML(entry);
+const entryHTML = (entry) => `<tr data-row-id="${ entry.id }">` +
+        leftButtonsHTML(entry) +
+        dictionaryElemsHTML(entry) +
+        rightButtonsHTML(entry) +
+    `</tr>`;
 
 // Close all inputs on escape key
 $(document).keydown(function(event) {
