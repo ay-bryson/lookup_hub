@@ -55,7 +55,7 @@ class Dictionary {
 
     replace(entry) {
         $(".hub-entry[data-row-id='" + entry.id + "']").remove();
-        $(dictionaryElemsHTML(entry)).insertAfter($(".buttons-left[data-row-id='" + entry.id + "']"));
+        $(dictionaryElemsHTML(entry)).insertAfter($("tr[data-row-id='" + entry.id + "']").children()[1]);
     }
 }
 
