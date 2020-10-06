@@ -125,7 +125,7 @@ function removeRow(elemID) {
 }
 
 
-function appendRow(elemID) {
+function addRow(elemID) {
     var data = {
         entry_id: elemID,
     }
