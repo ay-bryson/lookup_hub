@@ -4,7 +4,7 @@
     grid-gap: 5px;
     grid-template-columns: auto 1fr 1fr 1fr auto;
     min-width: 900px;
-    max-width: 1500px;
+    max-width: 1700px;
     margin: auto;
 }
 
@@ -34,11 +34,16 @@
     height: 20px;
     width: 20px;
     opacity: 50%;
-    /* background-color: indigo; */
 }
 
 .buttons-left {
-    grid-column: 1
+    grid-column: 1;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.buttons-left button {
+    margin-left: 5px;
 }
 
 .buttons-right {
@@ -46,13 +51,7 @@
 }
 
 .buttons-left button, .buttons-right button {
-    height: 100%;
     opacity: 0.5;
-}
-
-.buttons-left button:hover, .buttons-right button:hover {
-    opacity: 1;
-    cursor: pointer;
 }
 
 .dictionary-button:hover .fa-minus-square {
