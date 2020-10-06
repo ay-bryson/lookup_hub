@@ -13,5 +13,5 @@ def index():
 def lookup_hub():
 
     return render_template('hub.html',
-                           dictionary=db[:500],
+                           dictionary=db[:],
                            indices=db.indices,)
