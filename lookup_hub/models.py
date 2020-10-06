@@ -19,6 +19,9 @@ class Database(object):
     indices = []
 
     jsonl_fp = os.path.join(basedir, 'data', 'dictionary.jsonl')
+    if not os.path.isfile(jsonl_fp):
+        jsonl_fp = init_dummy_dictionary()
+
 
     def __init__(self):
         with open(self.jsonl_fp, 'r') as jsonl_fp:
@@ -96,3 +99,14 @@ class Line(object):
             'de': {'text': None, 'comment': None},
             'nl': {'text': None, 'comment': None},
         }
+
+
+def init_dummy_dictionary():
+    jsonl_fp = os.path.join(basedir, 'data', 'dummy_dictionary.jsonl')
+    with open(jsonl_fp, 'w+') as jsonl_f:
+        jsonl_f.write(json.dumps(
+            {"de": {"text": "Guten Tag", "comment": None},
+             "en": {"text": "Hello", "comment": "Or 'Good day'"},
+             "nl": {"text": "Hallo", "comment": None}}
+        ))
+    return jsonl_fp
