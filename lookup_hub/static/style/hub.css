@@ -63,7 +63,7 @@
     color: green;
 }
 
-.dictionary-button:hover .fa-pen-square {
+.dictionary-button:hover .fa-pencil-square {
     color: rgb(218, 185, 0);
 }
 
@@ -102,13 +102,13 @@
 #edit-entry-grid {
     background-color: rgb(31, 106, 116);
     width: 100%;
-    display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 10px;
     min-width: 900px;
     max-width: 1500px;
     margin: 30vh auto auto;
     padding: 40px;
+    display: none;
 }
 
 .edit-entry-grid-elem {
