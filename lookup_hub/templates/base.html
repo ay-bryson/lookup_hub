@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style/vars.css') }}">
     <!-- <link rel="stylesheet" src="{{ url_for('static', filename='lib/font-awesome.min.css') }}"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='lib/pure-min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {% block styles %} {% endblock %}
     <script src="{{ url_for('static', filename='scripts/tools.js') }}"></script>
@@ -17,19 +18,19 @@
     <div id="navigator-div" class="button-row">
         <div>
             <a href="/">
-                <button>Home</button>
+                <button class="pure-button">Home</button>
             </a>
         </div>
         <div>
             <a href="/hub">
-                <button>Lookup Hub</button>
+                <button class="pure-button">Lookup Hub</button>
             </a>
         </div>
         <a href="/mistakes">
-            <button disabled>Mistakes</button>
+            <button class="pure-button" disabled>Mistakes</button>
         </a>
         <!-- <a href="/documents">
-            <button disabled>Documents</button>
+            <button class="pure-button" disabled>Documents</button>
         </a> -->
 
         <div id="navigator-filler"></div>

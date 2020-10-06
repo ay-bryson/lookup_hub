@@ -118,15 +118,15 @@ const leftButtonsHTML = (entry) => `
     <div class="grid-elem buttons-left"
     data-row-id="${ entry.id }">
         <button
-            class="dictionary-button"
+            class="pure-button dictionary-button"
             data-key="${ entry.id }"
             onclick="removeRow('${ entry.id }');">
             <i class="fa fa-minus-square fa-lg"></i>
         </button>
         <button
-            class="dictionary-button"
+            class="pure-button dictionary-button"
             data-key="${ entry.id }"
-            onclick="appendRow('${ entry.id }');">
+            onclick="addRow('${ entry.id }');">
             <i class="fa fa-plus-square fa-lg"></i>
         </button>
     </div>
@@ -171,8 +171,8 @@ const rightButtonsHTML = (entry) => `
     <div class="grid-elem buttons-right"
         data-row-id="${ entry.id }">
         <button
+            class="pure-button dictionary-button"
             data-key="${ entry.id }"
-            class="dictionary-button"
             onclick="getEntry('${ entry.id }');">
             <i class="fa fa-pencil-square fa-lg"></i>
         </button>
