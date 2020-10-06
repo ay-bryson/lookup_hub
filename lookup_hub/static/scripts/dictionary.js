@@ -54,9 +54,8 @@ class Dictionary {
     }
 
     replace(entry) {
-        var index = this.ids.indexOf(entry.id);
-        this.remove(entry.id);
-        this.insert(entry, entry.id, index);
+        $(".hub-entry[data-row-id='" + entry.id + "']").remove();
+        $(dictionaryElemsHTML(entry)).insertAfter($(".buttons-left[data-row-id='" + entry.id + "']"));
     }
 }
 
@@ -85,7 +84,7 @@ class Entry {
         var comment = this.comments[language];
         if ([undefined, null, ""].indexOf(comment) == -1) {
             return `
-                <div class="entry-comment" title="${ comment }">
+                <div class="entry-comment" title="${ escapeHTML(comment) }">
                     <i class="fa fa-sticky-note fa-lg"></i>
                 </div>
             `
@@ -115,9 +114,9 @@ function escapeHTML(html) {
 }
 
 
-const entryHTML = (entry) => `
+const leftButtonsHTML = (entry) => `
     <div class="grid-elem buttons-left"
-        data-row-id="${ entry.id }">
+    data-row-id="${ entry.id }">
         <button
             class="dictionary-button"
             data-key="${ entry.id }"
@@ -131,7 +130,10 @@ const entryHTML = (entry) => `
             <i class="fa fa-plus-square fa-lg"></i>
         </button>
     </div>
+`
 
+
+const dictionaryElemsHTML = (entry) => `
     <div class="grid-elem hub-entry de"
         data-row-id="${ entry.id }">
         <div class="hub-entry-text"
@@ -162,7 +164,10 @@ const entryHTML = (entry) => `
         </div>
         ` + entry.commentHTML("nl") + `
     </div>
+    `
 
+
+const rightButtonsHTML = (entry) => `
     <div class="grid-elem buttons-right"
         data-row-id="${ entry.id }">
         <button
@@ -171,8 +176,10 @@ const entryHTML = (entry) => `
             onclick="getEntry('${ entry.id }');">
             <i class="fa fa-pencil-square fa-lg"></i>
         </button>
-    </div>`
+    </div>
+    `
 
+const entryHTML = (entry) => leftButtonsHTML(entry) + dictionaryElemsHTML(entry) + rightButtonsHTML(entry);
 
 // Close all inputs on escape key
 $(document).keydown(function(event) {

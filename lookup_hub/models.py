@@ -104,10 +104,12 @@ class Line(object):
 
 def init_dummy_dictionary():
     jsonl_fp = os.path.join(basedir, 'data', 'dummy_dictionary.jsonl')
+
     with open(jsonl_fp, 'w+') as jsonl_f:
         jsonl_f.write(json.dumps(
             {"de": {"text": "Guten Tag", "comment": None},
              "en": {"text": "Hello", "comment": "Or 'Good day'"},
              "nl": {"text": "Hallo", "comment": None}}
         ))
+
     return jsonl_fp
