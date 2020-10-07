@@ -16,7 +16,7 @@ w = Worker(q)
 class Database(object):
 
     data = []
-    indices = []
+    ids = []
 
     def __init__(self):
         jsonl_fp = os.path.join(basedir, 'data', 'dictionary.jsonl')
@@ -29,14 +29,14 @@ class Database(object):
             for jsonline in jsonl_fp:
                 line = Line(jsonline)
                 self.data.append(line)
-                self.indices.append(line.id)
+                self.ids.append(line.id)
 
         self.last = None
 
     def __getitem__(self, key):
         # If using uuid
         if isinstance(key, str):
-            index = self.indices.index(key)
+            index = self.ids.index(key)
             return self.data[index].data
 
         # If slicing/indexing
@@ -46,7 +46,7 @@ class Database(object):
             return [line.data for line in self.data[key]]
 
     def __setitem__(self, key, contents):
-        index = self.indices.index(key)
+        index = self.ids.index(key)
         self.data[index].data.update(contents)
 
         self._save()
@@ -54,19 +54,22 @@ class Database(object):
     def _save(self):
         q.enqueue(self.update_jsonl, self.data)
 
-    def new_row(self, key):
-        index = self.indices.index(key)
-        blank_line = Line()
-        self.data.insert(index, blank_line)
-        self.indices.insert(index, blank_line.id)
-        self.last_id = blank_line.id
+    def new_row_by_index(self, index, contents=None):
+        new_row = Line(contents)
+        self.data.insert(index, new_row)
+        self.ids.insert(index, new_row.id)
+        self.last_id = new_row.id
 
         self._save()
 
+    def new_row_by_id(self, id_in, contents=None):
+        index = self.ids.index(id_in)
+        self.new_row_by_index(index, contents)
+
     def remove_row(self, key):
-        index = self.indices.index(key)
+        index = self.ids.index(key)
         self.data.pop(index)
-        self.indices.pop(index)
+        self.ids.pop(index)
 
         self._save()
 

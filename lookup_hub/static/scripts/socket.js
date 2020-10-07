@@ -24,10 +24,10 @@ function startSocket() {
         dictionary.replace(entry)
     })
 
-    socket.on("inserted_row", (data) => {
+    socket.on("new_row", (data) => {
         var atID = data["entry_id"];
         var entry = new Entry(data["new_entry"]);
-        dictionary.addRow(entry, atID);
+        dictionary.insertDataByID(atID, entry);
     })
 
     socket.on("removed_row", (data) => {
@@ -92,7 +92,7 @@ function nullIfEmpty(string) {
 
 
 function submitChanges() {
-    newEntry = {
+    entryData = {
         en: {
             text: $("#text-en").val(),
             comment: nullIfEmpty($("#comment-en").val()),
@@ -107,16 +107,21 @@ function submitChanges() {
         },
     }
 
+    sockEditEntry(entryData, currentEntry);
+}
+
+
+function sockEditEntry(entryData, entryID) {
     var data = {
-        entry_id: currentEntry,
-        new_entry: newEntry,
+        entry_id: entryID,
+        new_entry: entryData,
     }
 
     socket.emit("update_entry", data);
 }
 
 
-function removeRow(elemID) {
+function sockRemoveRow(elemID) {
     var data = {
         entry_id: elemID,
     }
@@ -125,13 +130,15 @@ function removeRow(elemID) {
 }
 
 
-function addRow(elemID) {
+function sockAddRowID(elemID, contents) {
     var data = {
-        entry_id: elemID,
+        at_id: elemID,
+        contents: contents,
     }
 
-    socket.emit("new_row", data);
+    socket.emit("new_row_by_id", data);
 }
+
 
 
 startSocket();

@@ -33,6 +33,7 @@
 }
 
 .hub-entry {
+    width: 30%;
     padding: 7px;
     background-color: var(--off-white);
 }

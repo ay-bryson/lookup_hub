@@ -19,7 +19,7 @@ def lookup_hub():
 
     return render_template('hub.html',
                            dictionary=db[:],
-                           indices=db.indices,)
+                           indices=db.ids,)
 
 
 @app.route('/mistakes')

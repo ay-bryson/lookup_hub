@@ -14,6 +14,7 @@
 
 {% block right_buttons %}
     <div class="navigator-button-right">
+        <button class="pure-button" id="undo-button" onclick="dictionary.undo();" disabled>Undo last delete</button>
         <button class="pure-button" id="socket-status" onclick="startSocket();">Waiting...</button>
     </div>
 {% endblock %}

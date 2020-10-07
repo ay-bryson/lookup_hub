@@ -10,47 +10,65 @@ class Dictionary {
     initialise(data) {
         for (data of dictionaryJSONL) {
             var entry = new Entry(data);
-            this.addRow(entry);
+            this.appendRow(entry);
         }
     }
 
-    addRow(entry, atID) {
-        this.push(entry);
-        this.insert(entry, atID);
-    }
-
-
-    push(entry) {
+    appendRow(entry) {
         this.entries.push(entry);
         this.ids.push(entry.id);
+
+        $("#hub-table").append(entry.html);
     }
 
-    insert(entry, atID, index) {
-        if (atID === undefined) {
-            // Only here when initiating dictionary
-            $("#hub-table").append(entry.html);
-        } else {
-            // atID specified => insert before `atID`
-            if (index === undefined) {
-                var index = this.ids.indexOf(atID);
-            }
-            this.entries.splice(index, 0, entry);
-            this.ids.splice(index, 0, entry.id);
+    insertDataByID(id, entry) {
+        var index = this.ids.indexOf(id);
+        this.insertDataByIndex(index, entry);
 
-            var nextID = this.ids[index + 1];
-            var dictIDElems = findEntryElem(nextID);
-            $(entry.html).insertBefore(dictIDElems.first().parent().parent());
-        }
+        this.displayRowByID(id, entry);
+    }
 
+    insertDataByIndex(index, entry) {
+        this.entries.splice(index, 0, entry);
+        this.ids.splice(index, 0, entry.id);
+    }
+
+    displayRowByID(id, entry) {
+        $(entry.html).insertBefore($("[data-row-id='" + id + "']")[0]);
+    }
+
+    displayRowByIndex(entry, index) {
+        var id = this.ids[index];
+        this.displayRowByID(entry, id);
     }
 
     remove(entryID) {
         var index = this.ids.indexOf(entryID);
+        pushToSession("lastDeleted", this.entries[index].pureJSON);
+        pushToSession("lastDeleteNeighbourIDs", this.ids[index + 1]);
 
         this.ids.splice(index, 1);
         this.entries.splice(index, 1);
 
         $("[data-row-id='" + entryID + "']").remove();
+        $("#undo-button").prop("disabled", false);
+    }
+
+    undo() {
+        if (
+            lastDeleteNeighbourIDs().length > 0 &&
+            lastDeleted().length > 0 &&
+            lastDeleteNeighbourIDs().length == lastDeleted().length
+        ) {
+            sockAddRowID(popFromSession("lastDeleteNeighbourIDs"), popFromSession("lastDeleted"));
+        }
+
+        if (
+            lastDeleteNeighbourIDs().length == 0 &
+            lastDeleted().length == 0
+        ) {
+            $("#undo-button").prop("disabled", true);
+        }
     }
 
     replace(entry) {
@@ -63,15 +81,16 @@ class Dictionary {
 class Entry {
     constructor(data) {
         this.id = data["id"];
+        this.pureJSON = data;
 
         this.textEN = emptyIfNull(data["en"]["text"]);
         this.textDE = emptyIfNull(data["de"]["text"]);
         this.textNL = emptyIfNull(data["nl"]["text"]);
 
         this.comments = {
-            "en": data["en"]["comment"],
-            "de": data["de"]["comment"],
-            "nl": data["nl"]["comment"],
+            en: data["en"]["comment"],
+            de: data["de"]["comment"],
+            nl: data["nl"]["comment"],
         }
 
     }
@@ -119,7 +138,7 @@ const leftButtonsHTML = (entry) => `
         <button
             class="pure-button dictionary-button"
             data-key="${ entry.id }"
-            onclick="removeRow('${ entry.id }');">
+            onclick="sockRemoveRow('${ entry.id }');">
             <i class="fa fa-minus-square fa-lg"></i>
         </button>
     </td>
@@ -127,7 +146,7 @@ const leftButtonsHTML = (entry) => `
         <button
             class="pure-button dictionary-button"
             data-key="${ entry.id }"
-            onclick="addRow('${ entry.id }');">
+            onclick="sockAddRowID('${ entry.id }');">
             <i class="fa fa-plus-square fa-lg"></i>
         </button>
     </td>
@@ -186,10 +205,44 @@ const entryHTML = (entry) => `<tr data-row-id="${ entry.id }">` +
         rightButtonsHTML(entry) +
     `</tr>`;
 
-// Close all inputs on escape key
+
+function initSession() {
+    window.sessionStorage.lastDeleteNeighbourIDs = "[]";
+    window.sessionStorage.lastDeleted = "[]";
+}
+
+
+function pushToSession(key, value) {
+    var sessArray = JSON.parse(window.sessionStorage.getItem(key));
+    sessArray.push(value);
+    window.sessionStorage.setItem(key, JSON.stringify(sessArray));
+}
+
+
+function popFromSession(key) {
+    var sessArray = JSON.parse(window.sessionStorage.getItem(key));
+    var value = sessArray.pop();
+    window.sessionStorage.setItem(key, JSON.stringify(sessArray));
+    return value;
+}
+
+
+function lastDeleted() {
+    return JSON.parse(window.sessionStorage.lastDeleted);
+}
+
+
+function lastDeleteNeighbourIDs() {
+    return JSON.parse(window.sessionStorage.lastDeleteNeighbourIDs);
+}
+
+
 $(document).keydown(function(event) {
+    // Close all inputs on escape key
     if (event.keyCode == 27) {
         $("#popup-container").hide();
+    } else if (event.keyCode == 90 && event.ctrlKey && $("#undo-button").prop("disabled")) {
+        dictionary.undo();
     }
 });
 
@@ -197,6 +250,11 @@ $(document).keydown(function(event) {
 $(document).ready( function() {
 
     dictionary.initialise();
+
+    if (window.sessionStorage.getItem("lastDeleted") === undefined) {
+        initSession();
+        $("#undo-button").prop("disabled", true);
+    }
 
     $("#popup-container").on("click", function(event) {
         if (event.target == $("#popup-container")[0]) {
@@ -214,4 +272,14 @@ $(document).ready( function() {
             $("#submit-entry-button").click();
         }
     })
+
+
+    if (
+        lastDeleteNeighbourIDs.length > 0 &&
+        lastDeleted.length > 0 &&
+        lastDeleteNeighbourIDs.length == lastDeleted.length
+    ) {
+        $("#undo-button").prop("disabled", false);
+    }
+
 })

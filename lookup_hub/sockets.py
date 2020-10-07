@@ -34,18 +34,31 @@ def update_entry(data):
     emit('updated_entry', data_out, broadcast=True)
 
 
-@socketio.on('new_row')
-def new_row(data):
-    at_entry_id = data['entry_id']
-
-    db.new_row(at_entry_id)
+@socketio.on('new_row_by_id')
+def new_row_by_id(data):
+    at_id = data['at_id']
+    contents = data.get('contents')
+    db.new_row_by_id(at_id, contents)
 
     data_out = {
-        'entry_id': at_entry_id,
+        'entry_id': at_id,
         'new_entry': db[db.last_id],
     }
 
-    emit('inserted_row', data_out, broadcast=True)
+    emit('new_row', data_out, broadcast=True)
+
+@socketio.on('new_row_by_index')
+def new_row_by_index(data):
+    index = data['index']
+    contents = data.get('contents')
+    db.new_row_by_index(index, contents)
+
+    data_out = {
+        'entry_id': db.last_id,
+        'new_entry': db[db.last_id],
+    }
+
+    emit('new_row', data_out, broadcast=True)
 
 
 @socketio.on('remove_row')
