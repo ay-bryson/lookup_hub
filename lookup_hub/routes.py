@@ -2,7 +2,7 @@ from flask import render_template, request, Response
 from flask import current_app as app
 from flask_basicauth import BasicAuth
 
-from . import db
+from . import db, dummy_db
 
 
 basic_auth = BasicAuth(app)
@@ -16,10 +16,15 @@ def index():
 @app.route('/hub')
 @basic_auth.required
 def lookup_hub():
-
     return render_template('hub.html',
                            dictionary=db[:],
                            indices=db.ids,)
+
+@app.route('/sandbox')
+def try_it_out():
+    return render_template('hub.html',
+                           dictionary=dummy_db[:],
+                           indices=dummy_db.ids,)
 
 
 @app.route('/mistakes')
