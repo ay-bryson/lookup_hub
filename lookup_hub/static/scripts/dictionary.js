@@ -12,6 +12,7 @@ class Dictionary {
             var entry = new Entry(data);
             this.appendRow(entry);
         }
+        this.appendLastRow();
     }
 
     appendRow(entry) {
@@ -19,6 +20,20 @@ class Dictionary {
         this.ids.push(entry.id);
 
         $("#hub-table").append(entry.html);
+    }
+
+    appendLastRow() {
+        var addRowOnlyHTML = `<td></td>
+        <td class="buttons-left">
+            <button
+                class="pure-button dictionary-button"
+                data-row-key="-1"
+                title="Insert new row here"
+                onclick="sockAddRowIndex(-1);">
+                <i class="fa fa-plus-square fa-lg"></i>
+            </button>
+        </td>`
+        $("#hub-table").append(addRowOnlyHTML);
     }
 
     insertDataByID(id, entry) {
@@ -44,6 +59,7 @@ class Dictionary {
 
     remove(entryID) {
         var index = this.ids.indexOf(entryID);
+
         pushToSession("lastDeleted", this.entries[index].pureJSON);
         pushToSession("lastDeleteNeighbourIDs", this.ids[index + 1]);
 
@@ -72,6 +88,9 @@ class Dictionary {
     }
 
     replace(entry) {
+        var index = this.ids.indexOf(entry.id);
+        this.entries[index] = entry;
+
         $(".hub-entry[data-row-id='" + entry.id + "']").remove();
         $(dictionaryElemsHTML(entry)).insertAfter($("tr[data-row-id='" + entry.id + "']").children()[1]);
     }
@@ -93,6 +112,11 @@ class Entry {
             nl: data["nl"]["comment"],
         }
 
+        this.colours = {
+            en: data["en"]["colour"],
+            de: data["de"]["colour"],
+            nl: data["nl"]["colour"],
+        }
     }
 
     get html() {
@@ -107,6 +131,19 @@ class Entry {
                     <i class="entry-comment fa fa-sticky-note fa-lg" title="${ escapeHTML(comment) }"></i>
                 </span>
             `
+        } else {
+            return ``
+        }
+    }
+
+    colourHTML(language) {
+        var colour = this.colours[language];
+        if ([undefined, null, ""].indexOf(colour) == -1) {
+            if (colour.toLowerCase() != "#ffffff") {
+                return `
+                    style="border: 10px; border-color: ${ colour }; border-style: none solid none none;"
+                `
+            }
         } else {
             return ``
         }
@@ -137,6 +174,7 @@ const leftButtonsHTML = (entry) => `
     <td class="buttons-left">
         <button
             class="pure-button dictionary-button"
+            title="Delete this row"
             data-key="${ entry.id }"
             onclick="sockRemoveRow('${ entry.id }');">
             <i class="fa fa-minus-square fa-lg"></i>
@@ -145,6 +183,7 @@ const leftButtonsHTML = (entry) => `
     <td class="buttons-left">
         <button
             class="pure-button dictionary-button"
+            title="Insert new row here"
             data-key="${ entry.id }"
             onclick="sockAddRowID('${ entry.id }');">
             <i class="fa fa-plus-square fa-lg"></i>
@@ -155,6 +194,7 @@ const leftButtonsHTML = (entry) => `
 
 const dictionaryElemsHTML = (entry) => `
     <td class="hub-entry de"
+        ` + entry.colourHTML("de") + `
         data-row-id="${ entry.id }">
         <div class="hub-entry-text"
             id="${ entry.id }-de"
@@ -165,6 +205,7 @@ const dictionaryElemsHTML = (entry) => `
         ` + entry.commentHTML("de") + `
     </td>
     <td class="hub-entry en"
+        ` + entry.colourHTML("en") + `
         data-row-id="${ entry.id }">
         <div class="hub-entry-text"
             id="${ entry.id }-en"
@@ -175,6 +216,7 @@ const dictionaryElemsHTML = (entry) => `
         ` + entry.commentHTML("en") + `
     </td>
     <td class="hub-entry nl"
+        ` + entry.colourHTML("nl") + `
         data-row-id="${ entry.id }">
         <div class="hub-entry-text"
             id="${ entry.id }-nl"
@@ -192,6 +234,7 @@ const rightButtonsHTML = (entry) => `
         data-row-id="${ entry.id }">
         <button
             class="pure-button dictionary-button"
+            title="Edit this row"
             data-key="${ entry.id }"
             onclick="getEntry('${ entry.id }');">
             <i class="fa fa-pencil-square fa-lg"></i>
@@ -251,10 +294,8 @@ $(document).ready( function() {
 
     dictionary.initialise();
 
-    if (window.sessionStorage.getItem("lastDeleted") === null) {
-        initSession();
-        $("#undo-button").prop("disabled", true);
-    }
+    initSession();
+    $("#undo-button").prop("disabled", true);
 
     $("#popup-container").on("click", function(event) {
         if (event.target == $("#popup-container")[0]) {
@@ -279,9 +320,9 @@ $(document).ready( function() {
     })
 
     if (
-        lastDeleteNeighbourIDs.length > 0 &&
-        lastDeleted.length > 0 &&
-        lastDeleteNeighbourIDs.length == lastDeleted.length
+        lastDeleteNeighbourIDs().length > 0 &&
+        lastDeleted().length > 0 &&
+        lastDeleteNeighbourIDs().length == lastDeleted().length
     ) {
         $("#undo-button").prop("disabled", false);
     }
