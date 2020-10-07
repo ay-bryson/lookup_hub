@@ -1,6 +1,12 @@
 var socket;
 var currentEntry;
 
+var dummyPage = window.location.pathname == "/sandbox";
+if (dummyPage) {
+    $("#dl-dict-button").attr("title", "This only works in the actual hub.");
+    $("#dl-dict-button").prop("disabled", true);
+}
+
 
 function startSocket() {
     socket = io.connect("http://" + document.domain + ":" + location.port);
@@ -24,10 +30,19 @@ function startSocket() {
         dictionary.replace(entry)
     })
 
-    socket.on("inserted_row", (data) => {
+    socket.on("new_row", (data) => {
         var atID = data["entry_id"];
         var entry = new Entry(data["new_entry"]);
-        dictionary.addRow(entry, atID);
+        if (atID == null) {
+            dictionary.appendRow(entry);
+        } else {
+            dictionary.insertDataByID(atID, entry);
+        }
+    })
+
+    socket.on("new_row_append", (data) => {
+        var entry = new Entry(data["new_entry"]);
+        dictionary.appendRow(entry);
     })
 
     socket.on("removed_row", (data) => {
@@ -60,6 +75,7 @@ function findEntryElem(entryID, targLang) {
 
 function getEntry(entryID) {
     var data = {
+        dummy: dummyPage,
         entry_id: entryID,
     };
 
@@ -71,11 +87,15 @@ function showEditWindow(data) {
     $("#popup-container").show();
     $("#edit-entry-grid").css("display", "grid");
     for (lang of ["en", "de", "nl"]) {
-        for (item of ["text", "comment"]) {
+        for (item of ["text", "comment", "colour"]) {
             try {
-                $("#" + item + "-" + lang).val(data["entry"][lang][item]);
+                if (item == "colour" && data["entry"][lang][item] === undefined) {
+                    $("#" + item + "-" + lang).val("#FFFFFF");
+                } else {
+                    $("#" + item + "-" + lang).val(data["entry"][lang][item]);
+                }
             } catch(error) {
-                print(error)
+                print(error);
             }
         }
     }
@@ -92,32 +112,43 @@ function nullIfEmpty(string) {
 
 
 function submitChanges() {
-    newEntry = {
+    entryData = {
         en: {
             text: $("#text-en").val(),
             comment: nullIfEmpty($("#comment-en").val()),
+            colour: $("#colour-en").val(),
         },
         de: {
             text: $("#text-de").val(),
             comment: nullIfEmpty($("#comment-de").val()),
+            colour: $("#colour-de").val(),
         },
         nl: {
             text: $("#text-nl").val(),
             comment: nullIfEmpty($("#comment-nl").val()),
+            colour: $("#colour-nl").val(),
         },
     }
 
+    sockEditEntry(entryData, currentEntry);
+}
+
+
+function sockEditEntry(entryData, entryID) {
+
     var data = {
-        entry_id: currentEntry,
-        new_entry: newEntry,
+        dummy: dummyPage,
+        entry_id: entryID,
+        new_entry: entryData,
     }
 
     socket.emit("update_entry", data);
 }
 
 
-function removeRow(elemID) {
+function sockRemoveRow(elemID) {
     var data = {
+        dummy: dummyPage,
         entry_id: elemID,
     }
 
@@ -125,12 +156,25 @@ function removeRow(elemID) {
 }
 
 
-function addRow(elemID) {
+function sockAddRowID(elemID, contents) {
     var data = {
-        entry_id: elemID,
+        dummy: dummyPage,
+        at_id: elemID,
+        contents: contents,
     }
 
-    socket.emit("new_row", data);
+    socket.emit("new_row_by_id", data);
+}
+
+
+function sockAddRowIndex(elemIndex, contents) {
+    var data = {
+        dummy: dummyPage,
+        at_index: elemIndex,
+        contents: contents,
+    }
+
+    socket.emit("new_row_by_index", data);
 }
 
 

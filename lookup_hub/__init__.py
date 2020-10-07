@@ -5,6 +5,7 @@ from .models import Database
 
 
 db = Database()
+dummy_db = Database(dummy=True)
 socketio = SocketIO()
 
 
