@@ -147,10 +147,17 @@ function sockEditEntry(entryData, entryID) {
 
 
 function sockRemoveRow(elemID) {
+    var index = dictionary.ids.indexOf(elemID)
+
     var data = {
         dummy: dummyPage,
         entry_id: elemID,
     }
+
+    pushToSession("lastDeleted", dictionary.entries[index].pureJSON);
+    pushToSession("lastDeleteNeighbourIDs", dictionary.ids[index + 1]);
+
+    $("#undo-button").prop("disabled", false);
 
     socket.emit("remove_row", data);
 }

@@ -60,14 +60,10 @@ class Dictionary {
     remove(entryID) {
         var index = this.ids.indexOf(entryID);
 
-        pushToSession("lastDeleted", this.entries[index].pureJSON);
-        pushToSession("lastDeleteNeighbourIDs", this.ids[index + 1]);
-
         this.ids.splice(index, 1);
         this.entries.splice(index, 1);
 
         $("[data-row-id='" + entryID + "']").remove();
-        $("#undo-button").prop("disabled", false);
     }
 
     undo() {
