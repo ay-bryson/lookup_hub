@@ -78,6 +78,11 @@ class Database(object):
             for entry in data:
                 jsonl_f.writelines(json.dumps(entry.data) + '\n')
 
+    def read_jsonl(self):
+        with open(self.jsonl_fp, 'r') as jsonl_f:
+            json_lines = jsonl_f.read()
+        return json_lines
+
 
 class Line(object):
 

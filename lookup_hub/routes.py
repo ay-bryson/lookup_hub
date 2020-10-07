@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, Response
 from flask import current_app as app
 from flask_basicauth import BasicAuth
 
@@ -25,3 +25,14 @@ def lookup_hub():
 @app.route('/mistakes')
 def mistakes():
     return 'Coming soon?'
+
+
+@app.route('/download_dict')
+@basic_auth.required
+def download_dict():
+    data = db.read_jsonl()
+    return Response(
+        data,
+        mimetype="application/json",
+        headers={"Content-disposition":
+                 "attachment; filename=dictionary.jsonl"})

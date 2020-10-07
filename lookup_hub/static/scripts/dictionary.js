@@ -241,7 +241,7 @@ $(document).keydown(function(event) {
     // Close all inputs on escape key
     if (event.keyCode == 27) {
         $("#popup-container").hide();
-    } else if (event.keyCode == 90 && event.ctrlKey && $("#undo-button").prop("disabled")) {
+    } else if (event.keyCode == 90 && event.ctrlKey && !$("#undo-button").prop("disabled")) {
         dictionary.undo();
     }
 });
@@ -251,7 +251,7 @@ $(document).ready( function() {
 
     dictionary.initialise();
 
-    if (window.sessionStorage.getItem("lastDeleted") === undefined) {
+    if (window.sessionStorage.getItem("lastDeleted") === null) {
         initSession();
         $("#undo-button").prop("disabled", true);
     }
@@ -273,6 +273,10 @@ $(document).ready( function() {
         }
     })
 
+    $("#dl-dict-button").click( function(event) {
+        event.preventDefault();
+        window.location.href = "/download_dict";
+    })
 
     if (
         lastDeleteNeighbourIDs.length > 0 &&

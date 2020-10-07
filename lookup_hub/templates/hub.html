@@ -14,8 +14,13 @@
 
 {% block right_buttons %}
     <div class="navigator-button-right">
-        <button class="pure-button" id="undo-button" onclick="dictionary.undo();" disabled>Undo last delete</button>
-        <button class="pure-button" id="socket-status" onclick="startSocket();">Waiting...</button>
+        <button class="pure-button" id="undo-button"
+            title="Re-add the last row you deleted."
+            onclick="dictionary.undo();" disabled>Undo last delete</button>
+        <button class="pure-button" id="dl-dict-button"
+            title="If you've made a few changes, download the current dictionary and keep it, just in case Sam screws up and we lose data. (He promises to try not to.)"
+            >Download dictionary</button>
+        <div class="pure-button" id="socket-status" onclick="startSocket();" disabled>Waiting...</div>
     </div>
 {% endblock %}
 
