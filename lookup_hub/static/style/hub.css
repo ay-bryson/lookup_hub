@@ -15,7 +15,9 @@
     height: 50px;
 }
 
-#hub-table th.text-cell {
+#hub-table .text-cell {
+    min-width: 300px;
+    max-width: 450px;
     width: 30%;
 }
 
@@ -36,7 +38,6 @@
 }
 
 .hub-entry {
-    width: 30%;
     padding: 7px;
     background-color: var(--off-white);
 }

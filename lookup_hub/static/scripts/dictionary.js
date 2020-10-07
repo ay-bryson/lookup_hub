@@ -193,7 +193,7 @@ const leftButtonsHTML = (entry) => `
 
 
 const dictionaryElemsHTML = (entry) => `
-    <td class="hub-entry de"
+    <td class="hub-entry text-cell de"
         ` + entry.colourHTML("de") + `
         data-row-id="${ entry.id }">
         <div class="hub-entry-text"
@@ -204,7 +204,7 @@ const dictionaryElemsHTML = (entry) => `
         </div>
         ` + entry.commentHTML("de") + `
     </td>
-    <td class="hub-entry en"
+    <td class="hub-entry text-cell en"
         ` + entry.colourHTML("en") + `
         data-row-id="${ entry.id }">
         <div class="hub-entry-text"
@@ -215,7 +215,7 @@ const dictionaryElemsHTML = (entry) => `
         </div>
         ` + entry.commentHTML("en") + `
     </td>
-    <td class="hub-entry nl"
+    <td class="hub-entry text-cell nl"
         ` + entry.colourHTML("nl") + `
         data-row-id="${ entry.id }">
         <div class="hub-entry-text"
