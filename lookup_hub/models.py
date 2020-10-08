@@ -126,12 +126,12 @@ def init_dummy_dictionary():
     dummy_dict = [
         {
             "de": {"text": "Hallo", "colour": "#ffffff", "comment": None},
-            "en": {"text": "Hello", "colour": "#9D2C2C", "comment": "Or 'Good day'"},
+            "en": {"text": "Hello", "colour": "#9D2C2C", "comment": "Or, in some regions, 'Ayup me duck'"},
             "nl": {"text": "Hallo", "colour": "#ffffff", "comment": None}
         },
         {
             "de": {"text": "Tschüß", "colour": "#ffffff", "comment": None},
-            "en": {"text": "Bye", "colour": "#164200", "comment": "Or 'Goodbye'"},
+            "en": {"text": "Bye", "colour": "#164200", "comment": "Or 'Ta-ra'"},
             "nl": {"text": "Doei", "colour": "#62B639", "comment": None}
         },
     ]

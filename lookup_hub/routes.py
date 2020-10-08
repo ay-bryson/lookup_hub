@@ -32,6 +32,11 @@ def mistakes():
     return 'Coming soon?'
 
 
+@app.route('/guide')
+def guide():
+    return render_template('guide.html')
+
+
 @app.route('/download_dict')
 @basic_auth.required
 def download_dict():

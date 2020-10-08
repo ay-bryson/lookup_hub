@@ -2,10 +2,6 @@ var socket;
 var currentEntry;
 
 var dummyPage = window.location.pathname == "/sandbox";
-if (dummyPage) {
-    $("#dl-dict-button").attr("title", "This only works in the actual hub.");
-    $("#dl-dict-button").prop("disabled", true);
-}
 
 
 function startSocket() {
@@ -148,14 +144,15 @@ function sockEditEntry(entryData, entryID) {
 
 function sockRemoveRow(elemID) {
     var index = dictionary.ids.indexOf(elemID)
+    pushToSession("lastDeleted", dictionary.entries[index].pureJSON);
+    pushToSession("lastDeleteNeighbourIDs", dictionary.ids[index + 1]);
+
+    dictionary.remove(elemID);
 
     var data = {
         dummy: dummyPage,
         entry_id: elemID,
     }
-
-    pushToSession("lastDeleted", dictionary.entries[index].pureJSON);
-    pushToSession("lastDeleteNeighbourIDs", dictionary.ids[index + 1]);
 
     $("#undo-button").prop("disabled", false);
 

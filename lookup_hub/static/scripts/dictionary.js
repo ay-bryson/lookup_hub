@@ -323,4 +323,8 @@ $(document).ready( function() {
         $("#undo-button").prop("disabled", false);
     }
 
+    if (dummyPage) {
+        $("#dl-dict-button").attr("title", "This only works in the actual hub.");
+        $("#dl-dict-button").prop("disabled", true);
+    }
 })
