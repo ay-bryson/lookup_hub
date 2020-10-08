@@ -40,9 +40,9 @@ def guide():
 @app.route('/download_dict')
 @basic_auth.required
 def download_dict():
-    data = db.read_jsonl()
+    data = db.get_csv()
     return Response(
         data,
-        mimetype="application/json",
+        mimetype="text/csv",
         headers={"Content-disposition":
-                 "attachment; filename=dictionary.jsonl"})
+                 "attachment; filename=dictionary.csv"})

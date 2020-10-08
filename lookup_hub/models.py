@@ -1,6 +1,8 @@
 import os
 import json
 import uuid
+import time
+import pathlib
 
 from redis import Redis
 from rq import Queue, Worker, Connection
@@ -19,17 +21,24 @@ class Database(object):
         self.data = []
         self.ids = []
         self.i_am_a_dummy = dummy
+        self.timestamp_backup = time.time()
 
         if self.i_am_a_dummy:
             self.jsonl_fp = init_dummy_dictionary()
         else:
             self.jsonl_fp = os.path.join(basedir, 'data', 'dictionary.jsonl')
+            self.backup_dir = os.path.join(basedir, 'data', 'backups')
 
-        with open(self.jsonl_fp, 'r') as jsonl_fp:
-            for jsonline in jsonl_fp:
-                line = Line(jsonline)
-                self.data.append(line)
-                self.ids.append(line.id)
+            if not os.path.isdir(self.backup_dir):
+                os.mkdir(self.backup_dir)
+
+        dictionary_jsonl = self.read_jsonl()
+        for jsonline in dictionary_jsonl.split('\n'):
+            if jsonline == '':
+                continue
+            line = Line(jsonline)
+            self.data.append(line)
+            self.ids.append(line.id)
 
         self.last = None
 
@@ -53,6 +62,10 @@ class Database(object):
 
     def _save(self):
         q.enqueue(self.update_jsonl, self.data)
+
+        if time.time() - self.timestamp_backup > 21600 and not self.i_am_a_dummy:
+            q.enqueue(self.back_up, self.data)
+            self.timestamp_backup = time.time()
 
     def new_row_by_index(self, index, contents=None):
         new_row = Line(contents)
@@ -87,10 +100,29 @@ class Database(object):
             for entry in data:
                 jsonl_f.writelines(json.dumps(entry.data) + '\n')
 
+    def back_up(self, data):
+        current_backups = sorted(pathlib.Path(self.backup_dir).iterdir(), key=os.path.getctime)
+
+        if len(current_backups) > 1000:
+            os.remove(current_backups[0])
+
+        new_jsonl_fn = os.path.join(self.backup_dir, f'dictionary_{round(time.time())}.jsonl')
+
+        with open(new_jsonl_fn, 'w+') as backup_f:
+            for entry in data:
+                backup_f.writelines(json.dumps(entry.data) + '\n')
+
     def read_jsonl(self):
         with open(self.jsonl_fp, 'r') as jsonl_f:
             json_lines = jsonl_f.read()
         return json_lines
+
+    def get_csv(self):
+        data = ['en-text;en-comment;de-text;de-comment;nl-text;nl-comment']
+        for line in self.data:
+            data.append(line.as_csv())
+        return '\n'.join(data)
+
 
 
 class Line(object):
@@ -110,13 +142,30 @@ class Line(object):
             self.id = str(uuid.uuid4())
             self.data.update({'id': self.id})
 
-
     def get_empty_dict(self):
         return {
             'en': {'text': None, 'comment': None},
             'de': {'text': None, 'comment': None},
             'nl': {'text': None, 'comment': None},
         }
+
+    def as_csv(self, sep=';'):
+        order_lang = ['en', 'de', 'nl']
+        order_content = ['text', 'comment'] #, 'colour']
+
+        vals = []
+
+        for lang in order_lang:
+            for cat in order_content:
+                val = self.data.get(lang, {}).get(cat, '')
+                if val is None or isinstance(val, int):
+                    val = ''
+                    if isinstance(val, int):
+                        print(val)
+
+                vals += [val]
+
+        return sep.join(vals)
 
 
 def init_dummy_dictionary():
